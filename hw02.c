@@ -35,7 +35,7 @@ Takes in an integer value v and a integer bit index i
 Returns 1 if bit i in value v equals 1
 Returns 0 if bit i in value v equals 0
 */
-int is_bit_set(unsigned int v, unsigned int i) { 
+int is_bit_set(unsigned char v, unsigned char i) { 
   int V;
   if (i >= sizeof(unsigned char) * 8) {
     fprintf(stderr, "Index out of range!\n");
@@ -43,13 +43,11 @@ int is_bit_set(unsigned int v, unsigned int i) {
   }
   V = v >> (i - 1); //right shift so the indexed number is at the end
   if (V % 2 == 1) // odd numbers end in 1 in binary, even numbers end in 0
-  { 
-    printf("1");
+  {
     return 1; //if 1 is the last digit, then after right shift, 1 must have been at the indexed place
   }
   else 
   {
-    printf("0");
     return 0; //if 0 is the last digit, then after right shift, 0 must have been at the indexed place
   }
 }  
