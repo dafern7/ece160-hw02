@@ -1,22 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <math.h>
 /*
 Prints the sizes and possible ranges of four integer data types. 
 */
 void print_int_ranges() {
-  // TODO fill in missing values!
-  int short_bytes = 0;
-  int int_bytes = 0;
-  int uint_bytes = 0;
+  int short_bytes = sizeof(short); //utilizing 32 bit compiler
+  int int_bytes = sizeof(int);
+  int uint_bytes = sizeof(int);
   int long_bytes = sizeof(long);
 
-  short short_min = 0;
-  short short_max = 0;
-  int int_min = 0;
-  int int_max = 0;
+  short short_min = -pow(2,short_bytes*8); //power defined in math.h header file. 
+  short short_max = pow(2,short_bytes*8);
+  int int_min = -(pow(2,int_bytes*8)/2);
+  int int_max = (pow(2,int_bytes*8)/2)-1;
   unsigned int uint_min = 0;
-  unsigned int uint_max = 0;
+  unsigned int uint_max = pow(2,int_bytes*8)-1;
   long long_min = 1L << long_bytes * 8 - 1;
   long long_max = ~long_min;
 
@@ -36,19 +35,24 @@ Takes in an integer value v and a integer bit index i
 Returns 1 if bit i in value v equals 1
 Returns 0 if bit i in value v equals 0
 */
-int is_bit_set(unsigned char v, unsigned char i) {
+int is_bit_set(unsigned int v, unsigned int i) { 
+  int V;
   if (i >= sizeof(unsigned char) * 8) {
     fprintf(stderr, "Index out of range!\n");
     return 0;
   }
-
-  /*
-  TODO your implementation goes here!
-  */
-
-  return 0;
-}
-
+  V = v >> (i - 1); //right shift so the indexed number is at the end
+  if (V % 2 == 1) // odd numbers end in 1 in binary, even numbers end in 0
+  { 
+    printf("1");
+    return 1; //if 1 is the last digit, then after right shift, 1 must have been at the indexed place
+  }
+  else 
+  {
+    printf("0");
+    return 0; //if 0 is the last digit, then after right shift, 0 must have been at the indexed place
+  }
+}  
 /*
 Don't touch anything in main!
 */
@@ -77,3 +81,4 @@ int main(int argc, char* argv[])
   
   return 0;
 }
+
